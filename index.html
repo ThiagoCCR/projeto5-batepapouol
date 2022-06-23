@@ -17,14 +17,13 @@
         </div>
         <div class="content">
             <ul>
-                <li class="room-status">(09:21:45) João entra na sala...</li>
-                <li class="public-message">(09:22:28) João para Todos: Bom dia</li>
-                <li class="private-message"><p>(09:22:48) João reservadamente para Maria: Oi gatinha quer tc?</p></li>
             </ul>
         </div>
         <div class="footer">
             <input placeholder="Escreva aqui..." type="text">
-            <ion-icon class="send-txt-button" name="paper-plane-outline"></ion-icon>
+            <div onclick="sendMessage()">
+                <ion-icon class="send-txt-button" name="paper-plane-outline" ></ion-icon>
+            </div>
         </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

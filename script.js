@@ -1,7 +1,7 @@
 let messages;
+let userName = prompt('Qual o seu lindo nome?');
 
 function getName() {
-    userName = prompt('Qual o seu lindo nome?');
 
     while (typeof userName !== 'string') {
         userName = prompt('Qual o seu lindo nome?');
@@ -12,7 +12,6 @@ function getName() {
     }
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObj);
-
 
     promise.then(validUserName);
     promise.catch(wrongUserName);
@@ -51,13 +50,14 @@ function populateMessages(promise) {
 }
 
 function renderMessages() {
-    const templateStatusLi = `<li>(${currentMessage.time}) ${currentMessage.from} ${currentMessage.Text}</li>`;
-    const templateMessageLi = `<li>(${currentMessage.time}) ${currentMessage.from} para ${currentMessage.to}: ${currentMessage.text}</li>`;
-    const templatePrivateMessageLi = `<li>(${currentMessage.time}) ${currentMessage.from} reservadamente para ${currentMessage.to}: ${currentMessage.text}</li>`;
     const ulDiv = document.querySelector('ul');
+    console.log(messages)
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
+        const templateStatusLi = `<li class="room-status">(${currentMessage.time}) ${currentMessage.from} ${currentMessage.text}</li>`;
+        const templateMessageLi = `<li class="public-message">(${currentMessage.time}) ${currentMessage.from} para ${currentMessage.to}: ${currentMessage.text}</li>`;
+        const templatePrivateMessageLi = `<li class="private-message">(${currentMessage.time}) ${currentMessage.from} reservadamente para ${currentMessage.to}: ${currentMessage.text}</li>`;
 
         if(currentMessage.type === 'status'){
             ulDiv.innerHTML += templateStatusLi;
@@ -66,13 +66,23 @@ function renderMessages() {
         } else {
             ulDiv.innerHTML += templatePrivateMessageLi;
         }
-
-
-
     }
-
-
-
-
 }
 
+function sendMessage(){
+    const message = document.queryCommandValue('input').value;
+    const messageTemplate = {
+        from: userName,
+        to: "Todos",
+        text: message,
+        type: "message"
+    }
+
+    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageTemplate);
+    promise.then(messageSent())
+}
+
+function messageSent(){
+    alert('mensagem enviada');
+    getMessagesFromAPI();
+}
