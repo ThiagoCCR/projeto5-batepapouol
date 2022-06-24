@@ -5,10 +5,6 @@ let clearUl = false;
 
 function getName() {
 
-    while (typeof userName !== 'string') {
-        userName = prompt('Qual o seu lindo nome?');
-    }
-
     userNameObj = {
         name: userName
     }
@@ -116,13 +112,11 @@ function messageError(){
 
 function showSidebar(){
     let sidebarDiv = document.querySelector('.side-bar-screen');
-
     sidebarDiv.classList.remove('hidden');
 
 }
 
 function hideSidebar(){
     let sidebarDiv = document.querySelector('.side-bar-screen');
-
     sidebarDiv.classList.add('hidden');
 }
