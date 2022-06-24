@@ -1,7 +1,7 @@
 let messages;
 let userName = prompt('Qual o seu lindo nome?');
-
 let userNameObj;
+let clearUl = false;
 
 function getName() {
 
@@ -36,6 +36,7 @@ function validUserName() {
 function wrongUserName(error) {
     if (error.response.status === 400) {
         alert('Já existe um usuário com este nome! Por favor informe outro');
+        userName = prompt('Qual o seu lindo nome?');
         getName();
     } else {
         alert('Erro desconhecido, insira um novo nome');
@@ -43,12 +44,14 @@ function wrongUserName(error) {
 }
 
 function getMessagesFromAPI() {
+    console.log('passei no getMessagesFromAPI')
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(populateMessages);
 }
 
 
 function populateMessages(promise) {
+    console.log('passei no populateMessages')
     if (promise.status === 200) {
         messages = promise.data;
         renderMessages();
@@ -59,6 +62,13 @@ function populateMessages(promise) {
 
 function renderMessages() {
     const ulDiv = document.querySelector('ul');
+
+    if(clearUl === true){
+        console.log('apaguei')
+        ulDiv.innerHTML = "";
+    }
+
+    console.log('passei no renderMessages')
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
@@ -85,8 +95,6 @@ function sendMessage(){
         type: "message"
     }
 
-    console.log(messageTemplate);
-
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageTemplate);
     promise.then(messageSent)
     promise.catch(messageError)
@@ -94,6 +102,7 @@ function sendMessage(){
 
 function messageSent(){
     alert('mensagem enviada');
+    clearUl = true;
     getMessagesFromAPI();
 }
 

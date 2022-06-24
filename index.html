@@ -11,21 +11,66 @@
 </head>
 
 <body>
-        <div class="header">
-            <img class="logo" src="./img/logo 1.png" />
-            <ion-icon class="participants-icon" name="people-sharp"></ion-icon>
+    <div class="header">
+        <img class="logo" src="./img/logo 1.png" />
+        <ion-icon class="participants-icon" name="people-sharp"></ion-icon>
+    </div>
+    <div class="content">
+        <ul>
+        </ul>
+    </div>
+    <div class="footer">
+        <input placeholder="Escreva aqui..." type="text">
+        <div onclick="sendMessage()">
+            <ion-icon class="send-txt-button" name="paper-plane-outline"></ion-icon>
         </div>
-        <div class="content">
-            <ul>
-            </ul>
-        </div>
-        <div class="footer">
-            <input placeholder="Escreva aqui..." type="text">
-            <div onclick="sendMessage()">
-                <ion-icon class="send-txt-button" name="paper-plane-outline" ></ion-icon>
+    </div>
+    <div class="side-bar-screen hidden">
+        <div class="side-bar">
+            <div class="side-title">
+                <h1>Escolha um contato </br> para enviar mensagem:</h1>
+            </div>
+            <div class="side-segment">
+                <div>
+                    <div>
+                        <ion-icon name="people"></ion-icon>
+                        <p>Todos</p>
+                    </div>
+                    <div>
+                        <ion-icon name="checkmark"></ion-icon>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <ion-icon name="people"></ion-icon>
+                        <p>Exemplo</p>
+                    </div>
+                </div>
+            </div>
+            <div class="side-title">
+                <h1>Escolha a visibilidade:</h1>
+            </div>
+            <div class="side-segment">
+                <div>
+                    <div>
+                        <ion-icon name="lock-open"></ion-icon>
+                        <p>Publico</p>
+                    </div>
+                    <div>
+                        <ion-icon name="checkmark"></ion-icon>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <p>Privado</p>
+                    </div>
+                </div>
             </div>
         </div>
-    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>

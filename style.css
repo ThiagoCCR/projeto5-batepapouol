@@ -14,6 +14,10 @@ strong{
     font-weight: 700;
 }
 
+
+
+/* MAINSCREEN */
+
 .header{
     height: 80px;
     background-color: #FFFFFF;
@@ -103,4 +107,96 @@ input{
 .send-txt-button{
     height: 26px;
     width: 26px;
+}
+
+
+
+/* SIDEBAR */
+
+.side-bar-screen{
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color:rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.side-bar{
+    top:0;
+    bottom: 0;
+    background-color: #FFFFFF;
+    float: right;
+    min-width: 300px;
+    padding: 15px;
+    height: 100%;
+
+}
+
+.side-title{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    margin-top: 15px;
+    height: 40px;
+    text-align: center;
+
+}
+
+h1{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.side-segment{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.side-segment > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.side-segment > div div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+p{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.side-segment ion-icon{
+    width: 25px;
+    height: 25px;
+}
+
+.side-segment > :nth-child(1) :nth-child(2) ion-icon{
+   color: #28BB25;
+   width: 20px;
+   height: 20px;
+}
+
+
+/* JS SCRIPT-STYLE */
+
+.hidden{
+    display: none;
+}
+
+.show{
+    display: initial;
 }
