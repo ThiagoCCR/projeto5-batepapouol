@@ -1,7 +1,6 @@
 let messages;
 let userName = prompt('Qual o seu lindo nome?');
 let userNameObj;
-let clearUl = false;
 
 function getName() {
 
@@ -40,14 +39,12 @@ function wrongUserName(error) {
 }
 
 function getMessagesFromAPI() {
-    console.log('passei no getMessagesFromAPI')
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(populateMessages);
 }
 
 
 function populateMessages(promise) {
-    console.log('passei no populateMessages')
     if (promise.status === 200) {
         messages = promise.data;
         renderMessages();
@@ -58,13 +55,7 @@ function populateMessages(promise) {
 
 function renderMessages() {
     const ulDiv = document.querySelector('ul');
-
-    if(clearUl === true){
-        console.log('apaguei')
-        ulDiv.innerHTML = "";
-    }
-
-    console.log('passei no renderMessages')
+    ulDiv.innerHTML = "";
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
@@ -80,7 +71,11 @@ function renderMessages() {
             ulDiv.innerHTML += templatePrivateMessageLi;
         }
     }
+    const lastMessage = document.querySelector('ul').lastElementChild;
+    lastMessage.scrollIntoView();
 }
+
+// setInterval(getMessagesFromAPI, 3000);
 
 function sendMessage(){
     const message = document.querySelector('input').value;
@@ -103,8 +98,8 @@ function messageSent(){
 }
 
 function messageError(){
-    alert('deu ruim');
-
+    alert('você não está mais online, entre novamente');
+    window.location.reload()
 }
 
 
