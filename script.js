@@ -110,3 +110,19 @@ function messageError(){
     alert('deu ruim');
 
 }
+
+
+//SIDEBAR 
+
+function showSidebar(){
+    let sidebarDiv = document.querySelector('.side-bar-screen');
+
+    sidebarDiv.classList.remove('hidden');
+
+}
+
+function hideSidebar(){
+    let sidebarDiv = document.querySelector('.side-bar-screen');
+
+    sidebarDiv.classList.add('hidden');
+}
