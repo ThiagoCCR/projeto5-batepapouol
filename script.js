@@ -22,7 +22,7 @@ function getName() {
 
 getName()
 
-setInterval(function(){
+setInterval(()=>{
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
     console.log('nome resetado')
 },5000);
@@ -77,13 +77,15 @@ function renderMessages() {
 }
 
 function sendMessage(){
-    const message = document.queryCommandValue('input').value;
+    const message = document.querySelector('input').value;
     const messageTemplate = {
         from: userName,
         to: "Todos",
         text: message,
         type: "message"
     }
+
+    console.log(messageTemplate);
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageTemplate);
     promise.then(messageSent)
