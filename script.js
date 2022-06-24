@@ -1,13 +1,15 @@
 let messages;
 let userName = prompt('Qual o seu lindo nome?');
 
+let userNameObj;
+
 function getName() {
 
     while (typeof userName !== 'string') {
         userName = prompt('Qual o seu lindo nome?');
     }
 
-    const userNameObj = {
+    userNameObj = {
         name: userName
     }
 
@@ -19,6 +21,12 @@ function getName() {
 }
 
 getName()
+
+setInterval(function(){
+    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
+    console.log('nome resetado')
+},5000);
+
 
 function validUserName() {
     alert('Bem vindo ao Chat UOL!');
@@ -51,7 +59,6 @@ function populateMessages(promise) {
 
 function renderMessages() {
     const ulDiv = document.querySelector('ul');
-    console.log(messages)
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
@@ -79,10 +86,16 @@ function sendMessage(){
     }
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageTemplate);
-    promise.then(messageSent())
+    promise.then(messageSent)
+    promise.catch(messageError)
 }
 
 function messageSent(){
     alert('mensagem enviada');
     getMessagesFromAPI();
+}
+
+function messageError(){
+    alert('deu ruim');
+
 }
