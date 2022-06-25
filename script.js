@@ -19,7 +19,6 @@ getName()
 
 setInterval(()=>{
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
-    console.log('nome resetado')
 },5000);
 
 
@@ -63,19 +62,24 @@ function renderMessages() {
         const templateMessageLi = `<li class="public-message">(${currentMessage.time}) ${currentMessage.from} para ${currentMessage.to}: ${currentMessage.text}</li>`;
         const templatePrivateMessageLi = `<li class="private-message">(${currentMessage.time}) ${currentMessage.from} reservadamente para ${currentMessage.to}: ${currentMessage.text}</li>`;
 
-        if(currentMessage.type === 'status'){
+        if (currentMessage.type === 'status'){
             ulDiv.innerHTML += templateStatusLi;
-        } else if (currentMessage.type === 'private_message' && (userNameObj.name === currentMessage.to)){
-            ulDiv.innerHTML += templatePrivateMessageLi;
-        } else {
+        }
+        else if (currentMessage.type === 'message'){
             ulDiv.innerHTML += templateMessageLi;
         }
+        else if (currentMessage.type === 'private_message' && currentMessage.to === userNameObj.name){
+            ulDiv.innerHTML += templatePrivateMessageLi;
+        } else {
+            continue;
+        }
+       
     }
     const lastMessage = document.querySelector('ul').lastElementChild;
     lastMessage.scrollIntoView();
 }
 
-// setInterval(getMessagesFromAPI, 3000);
+setInterval(getMessagesFromAPI, 3000);
 
 function sendMessage(){
     const message = document.querySelector('input').value;
@@ -106,12 +110,38 @@ function messageError(){
 //SIDEBAR 
 
 function showSidebar(){
-    let sidebarDiv = document.querySelector('.side-bar-screen');
+    const sidebarDiv = document.querySelector('.side-bar-screen');
     sidebarDiv.classList.remove('hidden');
+
+    const contentDiv = document.querySelector('.content');
+    contentDiv.style.overflow = 'hidden';
+
+    showOnlineUsers()
 
 }
 
 function hideSidebar(){
     let sidebarDiv = document.querySelector('.side-bar-screen');
     sidebarDiv.classList.add('hidden');
+
+    const contentDiv = document.querySelector('.content');
+    contentDiv.style.overflow = 'scroll';
+
 }
+
+function showOnlineUsers(){
+    const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+
+    promise.then((promise)=> {
+        const div = document.querySelector('.online-users');
+        const onlineUsers = promise.data
+        div.innerHTML = `<div><div><ion-icon name="people"></ion-icon><p>Todos</p></div><div><ion-icon name="checkmark"></ion-icon></div></div>`
+        for (let i = 0; i< onlineUsers.length; i++){
+            const name = onlineUsers[i].name;
+            const templateDiv = `<div><div><ion-icon name="people"></ion-icon><p>${name}</p></div><div></div></div>`
+            div.innerHTML += templateDiv;
+        }
+    })
+}
+
+setInterval(showOnlineUsers,3000);

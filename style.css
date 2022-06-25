@@ -115,7 +115,7 @@ input{
 /* SIDEBAR */
 
 .side-bar-screen{
-    position: absolute;
+    position: fixed;
     right: 0;
     left: 0;
     top: 0;
@@ -158,6 +158,7 @@ h1{
     display: flex;
     flex-direction: column;
     margin-bottom: 25px;
+    overflow-y: scroll;
 }
 
 .side-segment > div{
@@ -189,6 +190,11 @@ p{
    color: #28BB25;
    width: 20px;
    height: 20px;
+}
+
+.side-bar-screen > :nth-child(2){
+    width: 100%;
+    height: 100%;
 }
 
 
