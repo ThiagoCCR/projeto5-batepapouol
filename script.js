@@ -65,10 +65,10 @@ function renderMessages() {
 
         if(currentMessage.type === 'status'){
             ulDiv.innerHTML += templateStatusLi;
-        } else if (currentMessage.type === 'message'){
-            ulDiv.innerHTML += templateMessageLi;
-        } else {
+        } else if (currentMessage.type === 'private_message' && (userNameObj.name === currentMessage.to)){
             ulDiv.innerHTML += templatePrivateMessageLi;
+        } else {
+            ulDiv.innerHTML += templateMessageLi;
         }
     }
     const lastMessage = document.querySelector('ul').lastElementChild;
