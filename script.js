@@ -8,7 +8,7 @@ let lockInitScreen = true;
 
 
 function getName() {
-    
+
     userName = document.querySelector('.input-user-name').value;
     userNameObj = {
         name: userName
@@ -16,17 +16,17 @@ function getName() {
 
     showLoadingGif()
 
-    setTimeout(()=>{
+    setTimeout(() => {
         const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObj);
         promise.then(validUserName);
         promise.catch(wrongUserName);
         lockInitScreen = false;
-    },3000)
-    
+    }, 3000)
+
 
 }
 
-function showLoadingGif(){
+function showLoadingGif() {
 
     const loadingDiv = document.querySelector('.loading');
     const inputDiv = document.querySelector('.init-input-container');
@@ -74,22 +74,22 @@ function populateMessages(promise) {
 //KEEP USER STATUS ACTIVE
 
 
-setInterval(()=>{
+setInterval(() => {
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
-},5000);
+}, 5000);
 
 
 //MAIN SCREEN
 
 
-function showMainScreen(){
-  
+function showMainScreen() {
+
     const headDiv = document.querySelector('.header');
     const contentDiv = document.querySelector('.content');
     const footerdiv = document.querySelector('.footer');
     const initScreenDiv = document.querySelector('.initial-screen');
 
-    if (headDiv.classList.contains('hidden') && contentDiv.classList.contains('hidden') && footerdiv.classList.contains('hidden') && lockInitScreen === false){
+    if (headDiv.classList.contains('hidden') && contentDiv.classList.contains('hidden') && footerdiv.classList.contains('hidden') && lockInitScreen === false) {
         initScreenDiv.classList.add('hidden');
         headDiv.classList.remove('hidden');
         contentDiv.classList.remove('hidden');
@@ -109,18 +109,18 @@ function renderMessages() {
         const templateMessageLi = `<li class="public-message">(${currentMessage.time}) ${currentMessage.from} para ${currentMessage.to}: ${currentMessage.text}</li>`;
         const templatePrivateMessageLi = `<li class="private-message">(${currentMessage.time}) ${currentMessage.from} reservadamente para ${currentMessage.to}: ${currentMessage.text}</li>`;
 
-        if (currentMessage.type === 'status'){
+        if (currentMessage.type === 'status') {
             ulDiv.innerHTML += templateStatusLi;
         }
-        else if (currentMessage.type === 'message'){
+        else if (currentMessage.type === 'message') {
             ulDiv.innerHTML += templateMessageLi;
         }
-        else if (currentMessage.type === 'private_message' && (currentMessage.to === userNameObj.name || currentMessage.from === userNameObj.name)){
+        else if (currentMessage.type === 'private_message' && (currentMessage.to === userNameObj.name || currentMessage.from === userNameObj.name)) {
             ulDiv.innerHTML += templatePrivateMessageLi;
         } else {
             continue;
         }
-       
+
     }
 
     showMainScreen()
@@ -132,33 +132,34 @@ function renderMessages() {
 
 //KEEP UPDATING MESSAGES
 
+
 setInterval(getMessagesFromAPI, 3000);
 
 
 //SEND MESSAGE
 
 
-function sendMessage(){
-    const message = document.querySelector('input').value;
+function sendMessage() {
+    let message = document.querySelector('.msgm-box');
     const messageTemplate = {
         from: userName,
         to: "Todos",
-        text: message,
+        text: message.value,
         type: "message"
     }
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageTemplate);
     promise.then(messageSent)
     promise.catch(messageError)
+    message.value = "";
 }
 
-function messageSent(){
-    alert('mensagem enviada');
+function messageSent() {
     clearUl = true;
     getMessagesFromAPI();
 }
 
-function messageError(){
+function messageError() {
     alert('você não está mais online, entre novamente');
     window.location.reload()
 }
@@ -167,7 +168,7 @@ function messageError(){
 //SIDEBAR 
 
 
-function showSidebar(){
+function showSidebar() {
     const sidebarDiv = document.querySelector('.side-bar-screen');
     sidebarDiv.classList.remove('hidden');
 
@@ -178,7 +179,7 @@ function showSidebar(){
 
 }
 
-function hideSidebar(){
+function hideSidebar() {
     let sidebarDiv = document.querySelector('.side-bar-screen');
     sidebarDiv.classList.add('hidden');
 
@@ -187,19 +188,40 @@ function hideSidebar(){
 
 }
 
-function showOnlineUsers(){
+function showOnlineUsers() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
 
-    promise.then((promise)=> {
+    promise.then((promise) => {
         const div = document.querySelector('.online-users');
         const onlineUsers = promise.data
-        div.innerHTML = `<div data-identifier="participant"><div><ion-icon name="people"></ion-icon><p>Todos</p></div><div><ion-icon name="checkmark"></ion-icon></div></div>`
-        for (let i = 0; i< onlineUsers.length; i++){
+        div.innerHTML =
+            `<div>
+                <div data-identifier="participant">
+                    <div class="ion">
+                        <ion-icon name="people"></ion-icon>
+                    </div>
+                    <p>Todos</p>
+                </div>
+                <div>
+                    <ion-icon name="checkmark"></ion-icon>
+                </div>
+            </div>`
+        for (let i = 0; i < onlineUsers.length; i++) {
             const name = onlineUsers[i].name;
-            const templateDiv = `<div><div><ion-icon name="people"></ion-icon><p>${name}</p></div><div></div></div>`
+            const templateDiv =
+                `<div>
+                    <div data-identifier="participant">
+                        <div class="ion">
+                            <ion-icon name="people"></ion-icon>
+                        </div>
+                        <p>${name}</p>
+                    </div>
+                    <div>
+                    </div>
+                </div>`
             div.innerHTML += templateDiv;
         }
     })
 }
 
-setInterval(showOnlineUsers,10000);
+setInterval(showOnlineUsers, 10000);

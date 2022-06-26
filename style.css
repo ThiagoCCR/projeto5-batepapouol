@@ -13,6 +13,7 @@ body {
 
 /* INITIAL SCREEN */
 
+
 .initial-screen {
     position: fixed;
     right: 0;
@@ -67,6 +68,7 @@ button {
 
 
 /* MAINSCREEN */
+
 
 .header {
     height: 80px;
@@ -164,6 +166,7 @@ li {
 
 /* SIDEBAR */
 
+
 .side-bar-screen {
     position: fixed;
     right: 0;
@@ -179,10 +182,10 @@ li {
     bottom: 0;
     background-color: #FFFFFF;
     float: right;
-    min-width: 300px;
+    width: 300px;
     padding: 15px;
     height: 100%;
-
+    word-break: break-all;
 }
 
 .side-title {
@@ -231,9 +234,12 @@ p {
     margin-left: 10px;
 }
 
+.ion{
+    width: 30px;
+}
+
 .side-segment ion-icon {
-    width: 25px;
-    height: 25px;
+    font-size: 25px;
 }
 
 .side-segment> :nth-child(1) :nth-child(2) ion-icon {
@@ -249,6 +255,7 @@ p {
 
 
 /* JS SCRIPT-STYLE */
+
 
 .hidden {
     display: none !important; 
