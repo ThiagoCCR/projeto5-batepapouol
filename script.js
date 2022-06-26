@@ -68,7 +68,7 @@ function renderMessages() {
         else if (currentMessage.type === 'message'){
             ulDiv.innerHTML += templateMessageLi;
         }
-        else if (currentMessage.type === 'private_message' && currentMessage.to === userNameObj.name){
+        else if (currentMessage.type === 'private_message' && (currentMessage.to === userNameObj.name || currentMessage.from === userNameObj.name)){
             ulDiv.innerHTML += templatePrivateMessageLi;
         } else {
             continue;
@@ -135,7 +135,7 @@ function showOnlineUsers(){
     promise.then((promise)=> {
         const div = document.querySelector('.online-users');
         const onlineUsers = promise.data
-        div.innerHTML = `<div><div><ion-icon name="people"></ion-icon><p>Todos</p></div><div><ion-icon name="checkmark"></ion-icon></div></div>`
+        div.innerHTML = `<div data-identifier="participant"><div><ion-icon name="people"></ion-icon><p>Todos</p></div><div><ion-icon name="checkmark"></ion-icon></div></div>`
         for (let i = 0; i< onlineUsers.length; i++){
             const name = onlineUsers[i].name;
             const templateDiv = `<div><div><ion-icon name="people"></ion-icon><p>${name}</p></div><div></div></div>`
@@ -144,4 +144,4 @@ function showOnlineUsers(){
     })
 }
 
-setInterval(showOnlineUsers,3000);
+setInterval(showOnlineUsers,10000);

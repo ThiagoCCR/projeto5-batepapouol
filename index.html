@@ -13,7 +13,7 @@
 <body>
     <div class="header">
         <img class="logo" src="./img/logo 1.png" />
-        <div onclick="showSidebar()">
+        <div onclick="showSidebar()" data-identifier="visibility">
             <ion-icon class="participants-icon" name="people-sharp"></ion-icon>
         </div>
     </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="side-segment online-users">
                 <div>
-                    <div>
+                    <div data-identifier="participant">
                         <ion-icon name="people"></ion-icon>
                         <p>Todos</p>
                     </div>
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div onclick="hideSidebar()"></div>
+        <div onclick="hideSidebar()" data-identifier="visibility"></div>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
