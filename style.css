@@ -152,10 +152,18 @@ li {
     font-size: 18px;
     color: #000000;
     font-weight: 400;
-    font-style: italic;
     outline: none;
-
+  
 }
+
+.msgm-box::placeholder{
+    font-style: italic;
+} 
+
+
+
+
+
 
 .send-txt-button {
     height: 26px;
