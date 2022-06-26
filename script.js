@@ -1,25 +1,42 @@
 let messages;
-let userName = prompt('Qual o seu lindo nome?');
+let userName;
 let userNameObj;
+let lockInitScreen = true;
+
+
+// INITIAL SCREEN
+
 
 function getName() {
-
+    
+    userName = document.querySelector('.input-user-name').value;
     userNameObj = {
         name: userName
     }
 
-    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObj);
+    showLoadingGif()
 
-    promise.then(validUserName);
-    promise.catch(wrongUserName);
+    setTimeout(()=>{
+        const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObj);
+        promise.then(validUserName);
+        promise.catch(wrongUserName);
+        lockInitScreen = false;
+    },3000)
+    
 
 }
 
-getName()
+function showLoadingGif(){
 
-setInterval(()=>{
-    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
-},5000);
+    const loadingDiv = document.querySelector('.loading');
+    const inputDiv = document.querySelector('.init-input-container');
+
+    inputDiv.classList.add('hidden');
+    loadingDiv.classList.remove('hidden');
+}
+
+
+//VALIDATE USER NAME AND GET MESSAGES FROM API
 
 
 function validUserName() {
@@ -37,6 +54,7 @@ function wrongUserName(error) {
     }
 }
 
+
 function getMessagesFromAPI() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     promise.then(populateMessages);
@@ -52,9 +70,38 @@ function populateMessages(promise) {
     }
 }
 
+
+//KEEP USER STATUS ACTIVE
+
+
+setInterval(()=>{
+    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
+},5000);
+
+
+//MAIN SCREEN
+
+
+function showMainScreen(){
+  
+    const headDiv = document.querySelector('.header');
+    const contentDiv = document.querySelector('.content');
+    const footerdiv = document.querySelector('.footer');
+    const initScreenDiv = document.querySelector('.initial-screen');
+
+    if (headDiv.classList.contains('hidden') && contentDiv.classList.contains('hidden') && footerdiv.classList.contains('hidden') && lockInitScreen === false){
+        initScreenDiv.classList.add('hidden');
+        headDiv.classList.remove('hidden');
+        contentDiv.classList.remove('hidden');
+        footerdiv.classList.remove('hidden');
+    }
+}
+
+
 function renderMessages() {
     const ulDiv = document.querySelector('ul');
     ulDiv.innerHTML = "";
+
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
@@ -75,11 +122,21 @@ function renderMessages() {
         }
        
     }
+
+    showMainScreen()
+
     const lastMessage = document.querySelector('ul').lastElementChild;
     lastMessage.scrollIntoView();
 }
 
+
+//KEEP UPDATING MESSAGES
+
 setInterval(getMessagesFromAPI, 3000);
+
+
+//SEND MESSAGE
+
 
 function sendMessage(){
     const message = document.querySelector('input').value;
@@ -108,6 +165,7 @@ function messageError(){
 
 
 //SIDEBAR 
+
 
 function showSidebar(){
     const sidebarDiv = document.querySelector('.side-bar-screen');
