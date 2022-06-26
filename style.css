@@ -167,7 +167,6 @@ li {
 }
 
 
-
 /* SIDEBAR */
 
 
@@ -248,10 +247,9 @@ p {
     font-size: 25px;
 }
 
-.side-segment> :nth-child(1) :nth-child(2) ion-icon {
+.check-green {
     color: #28BB25;
-    width: 20px;
-    height: 20px;
+    font-size: 20px;
 }
 
 .side-bar-screen> :nth-child(2) {

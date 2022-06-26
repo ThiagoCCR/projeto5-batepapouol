@@ -22,7 +22,7 @@ function getName() {
         promise.then(validUserName);
         promise.catch(wrongUserName);
         lockInitScreen = false;
-    }, 3000)
+    }, 1500)
 
 
 }
@@ -180,7 +180,6 @@ function showSidebar() {
     sidebarDiv.classList.remove('hidden');
 
     const contentDiv = document.querySelector('.content');
-    contentDiv.style.overflow = 'hidden';
 
     showOnlineUsers()
 
@@ -202,28 +201,28 @@ function showOnlineUsers() {
         const div = document.querySelector('.online-users');
         const onlineUsers = promise.data
         div.innerHTML =
-            `<div>
+            `<div onclick="selectUser(this)" class="user selected">
                 <div data-identifier="participant">
                     <div class="ion">
                         <ion-icon name="people"></ion-icon>
                     </div>
                     <p>Todos</p>
                 </div>
-                <div>
-                    <ion-icon name="checkmark"></ion-icon>
+                <div class="check-user">
+                    <ion-icon class="check-green" name="checkmark"></ion-icon>
                 </div>
             </div>`
         for (let i = 0; i < onlineUsers.length; i++) {
             const name = onlineUsers[i].name;
             const templateDiv =
-                `<div>
+                `<div onclick="selectUser(this)" class="user">
                     <div data-identifier="participant">
                         <div class="ion">
                             <ion-icon name="people"></ion-icon>
                         </div>
                         <p>${name}</p>
                     </div>
-                    <div>
+                    <div class="check-user">
                     </div>
                 </div>`
             div.innerHTML += templateDiv;
@@ -232,3 +231,19 @@ function showOnlineUsers() {
 }
 
 setInterval(showOnlineUsers, 10000);
+
+function selectUser(element){
+    const lastSelectedUser = document.querySelector('.selected');
+    const checkedIconDiv = lastSelectedUser.querySelector('.check-user');
+
+    const selectedUser = element;
+    const uncheckedIcon = element.querySelector('.check-user');
+
+    lastSelectedUser.classList.remove('selected');
+    checkedIconDiv.innerHTML = "";
+
+    selectedUser.classList.add('selected');
+    uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
+
+
+}
