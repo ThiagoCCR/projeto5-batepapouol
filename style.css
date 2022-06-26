@@ -1,24 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
-*{
+* {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
 
 
-body{
-   background-color: #E5E5E5;
+body {
+    background-color: #E5E5E5;
 }
 
-strong{
+strong {
     font-weight: 700;
 }
+
+/* INITIAL SCREEN */
+
+.initial-screen {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.input-user-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.initial-screen img {
+    height: 92px;
+    width: 130px;
+    margin-top: 150px;
+}
+
+.input-user-name input {
+    height: 54px;
+    width: 261px;
+    background-color: #FFFFFF;
+    color: #D7D7D7;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+button {
+    height: 45px;
+    width: 109px;
+    border-radius: 9px;
+    background-color: #E7E7E7;
+    font-size: 18px;
+    font-weight: 400;
+    color: #696969;
+    text-align: center;
+    border: none;
+    margin-top: 10px;
+}
+
+
+
+
+
 
 
 
 /* MAINSCREEN */
 
-.header{
+.header {
     height: 80px;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
@@ -32,29 +90,29 @@ strong{
     top: 0;
 }
 
-.logo{
+.logo {
     height: 53px;
-    width: 75px; 
+    width: 75px;
 }
 
-.participants-icon{
+.participants-icon {
     height: 30px;
     width: 42px;
 }
 
-.content{
+.content {
     margin-top: 100px;
     overflow-y: scroll;
     margin-bottom: 100px;
 }
 
-ul{
+ul {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-li{
+li {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -66,19 +124,19 @@ li{
     word-break: break-word;
 }
 
-.room-status{
+.room-status {
     background-color: #DCDCDC;
 }
 
-.public-message{
+.public-message {
     background-color: #FFFFFF;
 }
 
-.private-message{
+.private-message {
     background-color: #FFDEDE;
 }
 
-.footer{
+.footer {
     height: 80px;
     width: 100%;
     margin-top: 30px;
@@ -90,12 +148,12 @@ li{
     padding: 0 15px 0 15px;
     position: fixed;
     bottom: 0;
-    left:0;
-    right:0;
+    left: 0;
+    right: 0;
 }
 
-input{
-    border:none;
+.msgm-box {
+    border: none;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     color: #000000;
@@ -105,7 +163,7 @@ input{
 
 }
 
-.send-txt-button{
+.send-txt-button {
     height: 26px;
     width: 26px;
 }
@@ -114,18 +172,18 @@ input{
 
 /* SIDEBAR */
 
-.side-bar-screen{
+.side-bar-screen {
     position: fixed;
     right: 0;
     left: 0;
     top: 0;
     bottom: 0;
-    background-color:rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 1;
 }
 
-.side-bar{
-    top:0;
+.side-bar {
+    top: 0;
     bottom: 0;
     background-color: #FFFFFF;
     float: right;
@@ -135,7 +193,7 @@ input{
 
 }
 
-.side-title{
+.side-title {
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -146,14 +204,14 @@ input{
 
 }
 
-h1{
+h1 {
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 25px;
 }
 
-.side-segment{
+.side-segment {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -161,38 +219,38 @@ h1{
     overflow-y: scroll;
 }
 
-.side-segment > div{
+.side-segment>div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-.side-segment > div div{
+.side-segment>div div {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-p{
+p {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 16px;
     margin-left: 10px;
 }
 
-.side-segment ion-icon{
+.side-segment ion-icon {
     width: 25px;
     height: 25px;
 }
 
-.side-segment > :nth-child(1) :nth-child(2) ion-icon{
-   color: #28BB25;
-   width: 20px;
-   height: 20px;
+.side-segment> :nth-child(1) :nth-child(2) ion-icon {
+    color: #28BB25;
+    width: 20px;
+    height: 20px;
 }
 
-.side-bar-screen > :nth-child(2){
+.side-bar-screen> :nth-child(2) {
     width: 100%;
     height: 100%;
 }
@@ -200,10 +258,10 @@ p{
 
 /* JS SCRIPT-STYLE */
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.show{
+.show {
     display: initial;
 }

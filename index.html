@@ -11,18 +11,30 @@
 </head>
 
 <body>
-    <div class="header">
+    <div class="initial-screen">
+        <div>
+            <img class="logo" src="./img/logo 2.png" />
+        </div>
+        <div class = "input-user-name">
+            <input placeholder="Digite seu nome" type="text">
+            <button onclick="getName()">Entrar</button>            
+        </div>
+        <div class = "loading hidden">
+            <img src="./img/Loading_icon.gif"/>
+        </div>
+    </div>
+    <div class="header hidden">
         <img class="logo" src="./img/logo 1.png" />
         <div onclick="showSidebar()" data-identifier="visibility">
             <ion-icon class="participants-icon" name="people-sharp"></ion-icon>
         </div>
     </div>
-    <div class="content">
+    <div class="content hidden">
         <ul>
         </ul>
     </div>
-    <div class="footer">
-        <input placeholder="Escreva aqui..." type="text">
+    <div class="footer hidden">
+        <input class="msgm-box" placeholder="Escreva aqui..." type="text">
         <div onclick="sendMessage()">
             <ion-icon class="send-txt-button" name="paper-plane-outline"></ion-icon>
         </div>
