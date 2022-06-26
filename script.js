@@ -2,6 +2,7 @@ let messages;
 let userName;
 let userNameObj;
 let lockInitScreen = true;
+const messageBox = document.querySelector('.msgm-box');
 
 
 // INITIAL SCREEN
@@ -138,9 +139,15 @@ setInterval(getMessagesFromAPI, 3000);
 
 //SEND MESSAGE
 
+messageBox.addEventListener("keypress", function(e){
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+})
 
 function sendMessage() {
     let message = document.querySelector('.msgm-box');
+
     const messageTemplate = {
         from: userName,
         to: "Todos",

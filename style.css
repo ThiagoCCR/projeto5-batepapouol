@@ -7,7 +7,7 @@
 
 
 body {
-    background-color: #E5E5E5;
+    background-color: #F3F3F3;
 }
 
 
@@ -116,6 +116,7 @@ li {
     min-height: 40px;
     padding-left: 10px;
     word-break: break-word;
+    margin: 2px 0;
 }
 
 .room-status {
@@ -160,11 +161,6 @@ li {
     font-style: italic;
 } 
 
-
-
-
-
-
 .send-txt-button {
     height: 26px;
     width: 26px;
@@ -194,6 +190,7 @@ li {
     padding: 15px;
     height: 100%;
     word-break: break-all;
+    overflow-y: scroll;
 }
 
 .side-title {
@@ -220,6 +217,7 @@ h1 {
     flex-direction: column;
     margin-bottom: 25px;
     overflow-y: scroll;
+
 }
 
 .side-segment>div {
