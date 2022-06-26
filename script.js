@@ -235,15 +235,25 @@ setInterval(showOnlineUsers, 10000);
 function selectUser(element){
     const lastSelectedUser = document.querySelector('.selected');
     const checkedIconDiv = lastSelectedUser.querySelector('.check-user');
-
     const selectedUser = element;
     const uncheckedIcon = element.querySelector('.check-user');
 
     lastSelectedUser.classList.remove('selected');
     checkedIconDiv.innerHTML = "";
-
     selectedUser.classList.add('selected');
     uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
-
-
 }
+
+function selectPrivacy(element){
+    const lastSelectedPrivacy = document.querySelector('.checked');
+    const checkedIconDiv = lastSelectedUser.querySelector('.check-user');
+    const selectedUser = element;
+    const uncheckedIcon = element.querySelector('.check-user');
+
+    lastSelectedUser.classList.remove('selected');
+    checkedIconDiv.innerHTML = "";
+    selectedUser.classList.add('selected');
+    uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
+}
+
+
