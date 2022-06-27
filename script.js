@@ -2,6 +2,8 @@ let messages;
 let userName;
 let userNameObj;
 let lastMessages;
+let msgTo = 'Todos';
+let msgType = 'message';
 const messageBox = document.querySelector('.msgm-box');
 
 
@@ -40,8 +42,10 @@ function showLoadingGif() {
 
 function validUserName() {
     alert('Bem vindo ao Chat UOL!');
+    msgFrom = userName;
     getMessagesFromAPI();
 }
+
 
 function wrongUserName(error) {
     if (error.response.status === 400) {
@@ -54,7 +58,7 @@ function wrongUserName(error) {
 
 
 function getMessagesFromAPI() {
-    if (userName !== undefined){
+    if (userName !== undefined) {
         const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
         promise.then(populateMessages);
     }
@@ -65,7 +69,6 @@ function populateMessages(promise) {
     if (promise.status === 200) {
         lastMessages = messages;
         messages = promise.data;
-        console.log(messages)
         renderMessages();
     } else {
         alert('Erro na captura da lista de mensagens');
@@ -77,7 +80,7 @@ function populateMessages(promise) {
 
 
 setInterval(() => {
-    if (userName !== undefined){
+    if (userName !== undefined) {
         const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
     }
 }, 5000);
@@ -104,9 +107,9 @@ function showMainScreen() {
 
 function renderMessages() {
     const ulDiv = document.querySelector('ul');
-  
 
-    if (lastMessages[99].from === messages[99].from){
+
+    if (lastMessages[99].from === messages[99].from) {
         return;
     }
 
@@ -119,7 +122,7 @@ function renderMessages() {
         const templateMessageLi = `
         <span class="public-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> para <strong>${currentMessage.to}</strong>: ${currentMessage.text}</span>`;
         const templatePrivateMessageLi = `
-        <span class="private-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> reservadamente para <strong>${currentMessage.to}?</strong>: ${currentMessage.text}</span>`;
+        <span class="private-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> reservadamente para <strong>${currentMessage.to}</strong>: ${currentMessage.text}</span>`;
 
         if (currentMessage.type === 'status') {
             ulDiv.innerHTML += templateStatusLi;
@@ -150,7 +153,8 @@ setInterval(getMessagesFromAPI, 3000);
 
 //SEND MESSAGE
 
-messageBox.addEventListener("keypress", function(e){
+
+messageBox.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         sendMessage();
     }
@@ -159,12 +163,17 @@ messageBox.addEventListener("keypress", function(e){
 function sendMessage() {
     let message = document.querySelector('.msgm-box');
 
+    if (msgTo != 'Todos' && msgType === 'message' ){
+        msgTo = 'Todos';
+    }
+
     const messageTemplate = {
         from: userName,
-        to: "Todos",
+        to: msgTo,
         text: message.value,
-        type: "message"
+        type: msgType
     }
+
 
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageTemplate);
     promise.then(messageSent)
@@ -173,13 +182,11 @@ function sendMessage() {
 }
 
 function messageSent() {
-    clearUl = true;
     getMessagesFromAPI();
 }
 
 function messageError() {
-    alert('você não está mais online, entre novamente');
-    window.location.reload()
+    alert('erro no envio da mensagem');
 }
 
 
@@ -239,15 +246,61 @@ function showOnlineUsers() {
             div.innerHTML += templateDiv;
         }
     })
+    const privacyRow = document.querySelector('.privacy-row');
+    if (msgType === 'message'){
+        privacyRow.innerHTML = `
+            <div class="public-btn checked" onclick="selectPrivacy(this)" data-identifier="visibility">
+                    <div>
+                        <ion-icon name="lock-open"></ion-icon>
+                        <p>Publico</p>
+                    </div>
+                    <div class="check-privacy">
+                        <ion-icon class="check-green" name="checkmark"></ion-icon>
+                    </div>
+                </div>
+                <div class="private-btn" onclick="selectPrivacy(this)" data-identifier="visibility">
+                    <div>
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <p>Privado</p>
+                    </div>
+                    <div class="check-privacy"></div>
+            </div> `;
+    } else {
+        privacyRow.innerHTML = `
+            <div class="public-btn" onclick="selectPrivacy(this)" data-identifier="visibility">
+                    <div>
+                        <ion-icon name="lock-open"></ion-icon>
+                        <p>Publico</p>
+                    </div>
+                    <div class="check-privacy">
+                    </div>
+                </div>
+                <div class="private-btn checked" onclick="selectPrivacy(this)" data-identifier="visibility">
+                    <div>
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <p>Privado</p>
+                    </div>
+                    <div class="check-privacy">
+                        <ion-icon class="check-green" name="checkmark"></ion-icon>
+                    </div>
+            </div> `;
+    }
 }
 
 setInterval(showOnlineUsers, 10000);
 
-function selectUser(element){
+function selectUser(element) {
     const lastSelectedUser = document.querySelector('.selected');
     const checkedIconDiv = lastSelectedUser.querySelector('.check-user');
     const selectedUser = element;
     const uncheckedIcon = element.querySelector('.check-user');
+    msgTo = selectedUser.querySelector('p').innerHTML;
+
+    if (msgTo !== 'Todos' && msgType === 'private_message') {
+        alert('Você não pode mandar uma mensagem privada no modo público');
+        msgTo = 'Todos'
+        return;
+    }
 
     lastSelectedUser.classList.remove('selected');
     checkedIconDiv.innerHTML = "";
@@ -255,16 +308,27 @@ function selectUser(element){
     uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
 }
 
-function selectPrivacy(element){
+function selectPrivacy(element) {
     const lastSelectedPrivacy = document.querySelector('.checked');
     const checkedIconDiv = lastSelectedPrivacy.querySelector('.check-privacy');
     const selectedPrivacy = element;
     const uncheckedIcon = element.querySelector('.check-privacy');
+    msgType = selectedPrivacy.querySelector('p').innerHTML;
+
+    if (msgTo === 'Todos' && msgType !== 'Publico') {
+        alert('Escolha o usuário para o qual irá mandar a mensagem antes');
+        msgType = 'message';
+        return;
+    }
 
     lastSelectedPrivacy.classList.remove('checked');
     checkedIconDiv.innerHTML = "";
     selectedPrivacy.classList.add('checked');
     uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
+
+    if (selectedPrivacy.querySelector('p').innerHTML === "Publico") {
+        msgType = 'message';
+    } else {
+        msgType = 'private_message'
+    }
 }
-
-
