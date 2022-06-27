@@ -21,9 +21,7 @@ function getName() {
         const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObj);
         promise.then(validUserName);
         promise.catch(wrongUserName);
-        lockInitScreen = false;
-    }, 1500)
-
+    }, 1500);
 
 }
 
@@ -42,14 +40,14 @@ function showLoadingGif() {
 
 function validUserName() {
     alert('Bem vindo ao Chat UOL!');
+    lockInitScreen = false;
     getMessagesFromAPI();
 }
 
 function wrongUserName(error) {
     if (error.response.status === 400) {
         alert('Já existe um usuário com este nome! Por favor informe outro');
-        userName = prompt('Qual o seu lindo nome?');
-        getName();
+        window.location.reload()
     } else {
         alert('Erro desconhecido, insira um novo nome');
     }
@@ -250,9 +248,9 @@ function selectPrivacy(element){
     const selectedUser = element;
     const uncheckedIcon = element.querySelector('.check-user');
 
-    lastSelectedUser.classList.remove('selected');
+    lastSelectedUser.classList.remove('checked');
     checkedIconDiv.innerHTML = "";
-    selectedUser.classList.add('selected');
+    selectedUser.classList.add('checked');
     uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
 }
 
