@@ -98,25 +98,29 @@ function showMainScreen() {
         contentDiv.classList.remove('hidden');
         footerdiv.classList.remove('hidden');
     }
+
+
 }
 
 
 function renderMessages() {
     const ulDiv = document.querySelector('ul');
-    ulDiv.innerHTML = "";
+  
 
-    if (lastMessages === messages){
+    if (lastMessages[99].from === messages[99].from){
         return;
     }
+
+    ulDiv.innerHTML = "";
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
         const templateStatusLi = `
-        <li class="room-status">(${currentMessage.time}) <strong> ${currentMessage.from} </strong> ${currentMessage.text}</li>`;
+        <span class="room-status">(${currentMessage.time}) <strong> ${currentMessage.from} </strong> ${currentMessage.text}</span>`;
         const templateMessageLi = `
-        <li class="public-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> para <strong>${currentMessage.to}</strong>: ${currentMessage.text}</li>`;
+        <span class="public-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> para <strong>${currentMessage.to}</strong>: ${currentMessage.text}</span>`;
         const templatePrivateMessageLi = `
-        <li class="private-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> reservadamente para <strong>${currentMessage.to}?</strong>: ${currentMessage.text}</li>`;
+        <span class="private-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> reservadamente para <strong>${currentMessage.to}?</strong>: ${currentMessage.text}</span>`;
 
         if (currentMessage.type === 'status') {
             ulDiv.innerHTML += templateStatusLi;
@@ -255,15 +259,13 @@ function selectUser(element){
 function selectPrivacy(element){
     const lastSelectedPrivacy = document.querySelector('.checked');
     const checkedIconDiv = lastSelectedPrivacy.querySelector('.check-privacy');
-    console.log(lastSelectedPrivacy);
     const selectedPrivacy = element;
-    console.log(element);
     const uncheckedIcon = element.querySelector('.check-privacy');
 
-    // lastSelectedPrivacy.classList.remove('checked');
-    // checkedIconDiv.innerHTML = "";
-    // selectedPrivacy.classList.add('checked');
-    // uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
+    lastSelectedPrivacy.classList.remove('checked');
+    checkedIconDiv.innerHTML = "";
+    selectedPrivacy.classList.add('checked');
+    uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
 }
 
 

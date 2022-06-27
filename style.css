@@ -106,18 +106,16 @@ ul {
     justify-content: space-between;
 }
 
-li {
+span {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    column-gap: 2px;
     min-height: 40px;
     padding-left: 10px;
-    word-break: break-word;
+    word-break: break-all;
     margin: 2px 0;
+    text-align: flex-start;
+    align-items: center;
 }
 
 .room-status {
