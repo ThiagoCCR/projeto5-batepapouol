@@ -55,8 +55,10 @@ function wrongUserName(error) {
 
 
 function getMessagesFromAPI() {
-    const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-    promise.then(populateMessages);
+    if (userName !== undefined){
+        const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+        promise.then(populateMessages);
+    }
 }
 
 
@@ -74,7 +76,9 @@ function populateMessages(promise) {
 
 
 setInterval(() => {
-    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
+    if (userName !== undefined){
+        const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObj);
+    }
 }, 5000);
 
 
@@ -104,9 +108,12 @@ function renderMessages() {
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
-        const templateStatusLi = `<li class="room-status">(${currentMessage.time}) ${currentMessage.from} ${currentMessage.text}</li>`;
-        const templateMessageLi = `<li class="public-message">(${currentMessage.time}) ${currentMessage.from} para ${currentMessage.to}: ${currentMessage.text}</li>`;
-        const templatePrivateMessageLi = `<li class="private-message">(${currentMessage.time}) ${currentMessage.from} reservadamente para ${currentMessage.to}: ${currentMessage.text}</li>`;
+        const templateStatusLi = `
+        <li class="room-status">(${currentMessage.time}) <strong>${currentMessage.from}</strong> ${currentMessage.text}</li>`;
+        const templateMessageLi = `
+        <li class="public-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> para <strong>${currentMessage.to}</strong>: ${currentMessage.text}</li>`;
+        const templatePrivateMessageLi = `
+        <li class="private-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> reservadamente para <strong>${currentMessage.to}?</strong>: ${currentMessage.text}</li>`;
 
         if (currentMessage.type === 'status') {
             ulDiv.innerHTML += templateStatusLi;
