@@ -167,6 +167,10 @@ function sendMessage() {
         msgTo = 'Todos';
     }
 
+    if (msgTo === 'Todos' && msgType === 'private_message' ){
+        msgType = 'message';
+    }
+
     const messageTemplate = {
         from: userName,
         to: msgTo,
@@ -295,12 +299,6 @@ function selectUser(element) {
     const selectedUser = element;
     const uncheckedIcon = element.querySelector('.check-user');
     msgTo = selectedUser.querySelector('p').innerHTML;
-
-    if (msgTo !== 'Todos' && msgType === 'private_message') {
-        alert('Você não pode mandar uma mensagem privada no modo público');
-        msgTo = 'Todos'
-        return;
-    }
 
     lastSelectedUser.classList.remove('selected');
     checkedIconDiv.innerHTML = "";
