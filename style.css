@@ -113,6 +113,7 @@ li {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    column-gap: 2px;
     min-height: 40px;
     padding-left: 10px;
     word-break: break-word;

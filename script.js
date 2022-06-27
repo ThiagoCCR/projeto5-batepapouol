@@ -1,7 +1,7 @@
 let messages;
 let userName;
 let userNameObj;
-let lockInitScreen = true;
+let lastMessages;
 const messageBox = document.querySelector('.msgm-box');
 
 
@@ -21,7 +21,7 @@ function getName() {
         const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObj);
         promise.then(validUserName);
         promise.catch(wrongUserName);
-    }, 1500);
+    }, 1000);
 
 }
 
@@ -40,7 +40,6 @@ function showLoadingGif() {
 
 function validUserName() {
     alert('Bem vindo ao Chat UOL!');
-    lockInitScreen = false;
     getMessagesFromAPI();
 }
 
@@ -64,6 +63,7 @@ function getMessagesFromAPI() {
 
 function populateMessages(promise) {
     if (promise.status === 200) {
+        lastMessages = messages;
         messages = promise.data;
         renderMessages();
     } else {
@@ -92,7 +92,7 @@ function showMainScreen() {
     const footerdiv = document.querySelector('.footer');
     const initScreenDiv = document.querySelector('.initial-screen');
 
-    if (headDiv.classList.contains('hidden') && contentDiv.classList.contains('hidden') && footerdiv.classList.contains('hidden') && lockInitScreen === false) {
+    if (headDiv.classList.contains('hidden') && contentDiv.classList.contains('hidden') && footerdiv.classList.contains('hidden')) {
         initScreenDiv.classList.add('hidden');
         headDiv.classList.remove('hidden');
         contentDiv.classList.remove('hidden');
@@ -105,11 +105,14 @@ function renderMessages() {
     const ulDiv = document.querySelector('ul');
     ulDiv.innerHTML = "";
 
+    if (lastMessages === messages){
+        return;
+    }
 
     for (let i = 0; i < messages.length; i++) {
         let currentMessage = messages[i];
         const templateStatusLi = `
-        <li class="room-status">(${currentMessage.time}) <strong>${currentMessage.from}</strong> ${currentMessage.text}</li>`;
+        <li class="room-status">(${currentMessage.time}) <strong> ${currentMessage.from} </strong> ${currentMessage.text}</li>`;
         const templateMessageLi = `
         <li class="public-message">(${currentMessage.time}) <strong>${currentMessage.from}</strong> para <strong>${currentMessage.to}</strong>: ${currentMessage.text}</li>`;
         const templatePrivateMessageLi = `
@@ -251,14 +254,16 @@ function selectUser(element){
 
 function selectPrivacy(element){
     const lastSelectedPrivacy = document.querySelector('.checked');
-    const checkedIconDiv = lastSelectedUser.querySelector('.check-user');
-    const selectedUser = element;
-    const uncheckedIcon = element.querySelector('.check-user');
+    const checkedIconDiv = lastSelectedPrivacy.querySelector('.check-privacy');
+    console.log(lastSelectedPrivacy);
+    const selectedPrivacy = element;
+    console.log(element);
+    const uncheckedIcon = element.querySelector('.check-privacy');
 
-    lastSelectedUser.classList.remove('checked');
-    checkedIconDiv.innerHTML = "";
-    selectedUser.classList.add('checked');
-    uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
+    // lastSelectedPrivacy.classList.remove('checked');
+    // checkedIconDiv.innerHTML = "";
+    // selectedPrivacy.classList.add('checked');
+    // uncheckedIcon.innerHTML = '<ion-icon class="check-green" name="checkmark"></ion-icon>'
 }
 
 

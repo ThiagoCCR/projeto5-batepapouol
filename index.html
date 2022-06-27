@@ -45,8 +45,8 @@
                 <h1>Escolha um contato </br> para enviar mensagem:</h1>
             </div>
             <div class="side-segment online-users">
-                <div class="user selected" onclick="selectUser(this)">
-                    <div data-identifier="participant">
+                <div class="user selected" onclick="selectUser(this)" data-identifier="participant">
+                    <div>
                         <div class="ion">
                             <ion-icon name="people"></ion-icon>
                         </div>
@@ -61,17 +61,17 @@
                 <h1>Escolha a visibilidade:</h1>
             </div>
             <div class="side-segment">
-                <div class="private-btn" onclick="selectPrivacy()">
+                <div class="public-btn checked" onclick="selectPrivacy(this)" data-identifier="visibility">
                     <div>
                         <ion-icon name="lock-open"></ion-icon>
                         <p>Publico</p>
                     </div>
-                    <div class="check-privacy checked">
+                    <div class="check-privacy">
                         <ion-icon class="check-green" name="checkmark"></ion-icon>
                     </div>
                 </div>
-                <div>
-                    <div class="public-btn" onclick="selectPrivacy()">
+                <div class="private-btn" onclick="selectPrivacy(this)" data-identifier="visibility">
+                    <div>
                         <ion-icon name="lock-closed"></ion-icon>
                         <p>Privado</p>
                     </div>
