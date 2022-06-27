@@ -65,6 +65,7 @@ function populateMessages(promise) {
     if (promise.status === 200) {
         lastMessages = messages;
         messages = promise.data;
+        console.log(messages)
         renderMessages();
     } else {
         alert('Erro na captura da lista de mensagens');
@@ -86,7 +87,6 @@ setInterval(() => {
 
 
 function showMainScreen() {
-
     const headDiv = document.querySelector('.header');
     const contentDiv = document.querySelector('.content');
     const footerdiv = document.querySelector('.footer');
@@ -98,7 +98,6 @@ function showMainScreen() {
         contentDiv.classList.remove('hidden');
         footerdiv.classList.remove('hidden');
     }
-
 
 }
 
